@@ -1,31 +1,35 @@
-# Docker Deploys
+# Docker 部署
 
-Using Docker to deploy your Vapor app has several benefits: 
+使用 Docker 部署您的 Vapor 应用程序有以下几个好处：
 
-1. Your dockerized app can be spun up reliably using the same commands on any platform with a Docker Daemon -- namely, Linux (CentOS, Debian, Fedora, Ubuntu), macOS, and Windows.
-2. You can use docker-compose or Kubernetes manifests to orchestrate multiple services needed for a full deployment (e.g. Redis, Postgres, nginx, etc.).
-3. It is easy to test your app's ability to scale horizontally, even locally on your development machine.
+1.你可以在具有 Docker Daemon 的任何平台上使用相同的命令可靠地启动 dockerized 应用程序，这些平台包括 Linux（CentOS，Debian，Fedora，Ubuntu），macOS 和 Windows。
+2.你可以使用 docker-compose 或 Kubernetes manifests 来编写完整部署所需的多个服务（例如 Redis，Postgres，nginx 等）。
+3.可以轻松测试应用程序水平扩展的能力，你甚至可以在开发机器上进行本地测试。
 
-This guide will stop short of explaining how to get your dockerized app onto a server. The simplest deploy would involve installing Docker on your server and running the same commands you would run on your development machine to spin up your application. 
+本指南将不做任何解释或说明如何将您的 dockerized 应用程序安装到服务器上。最简单的部署将涉及在服务器上安装 Docker 并运行与在开发计算机上运行以启动应用程序相同的命令。
 
-More complicated and robust deployments are usually different depending on your hosting solution; many popular solutions like AWS have builtin support for Kubernetes and custom database solutions which make it difficult to write best practices in a way that applies to all deployments. 
+根据你的托管解决方案，更复杂，更强大的部署通常有所不同。 AWS等许多流行的解决方案都内置了对 Kubernetes 和自定义数据库解决方案的支持，这导致很难编写适用于所有部署的方式的最佳部署方式。
 
-Nevertheless, using Docker to spin your entire server stack up locally for testing purposes is incredibly valuable for both big and small serverside apps. Additionally, the concepts described in this guide apply in broad strokes to all Docker deployments.
+尽管如此，使用Docker在本地运转整个服务器以进行测试对于大型和小型服务器端应用程序都具有不容小视的价值。此外，本指南中描述的概念广泛适用于所有 Docker 部署。
 
-## Set Up
+## 配置
 
-You will need to set your developer environment up to run Docker and gain a basic understanding of the resource files that configure Docker stacks.
+你将需要设置您的开发环境以运行Docker，并基本了解配置 Docker 的资源文件。
 
-### Install Docker
+### 安装 Docker
 
-You will need to install Docker for your developer environment. You can find information for any platform in the [Supported Platforms](https://docs.docker.com/install/#supported-platforms) section of the Docker Engine Overview. If you are on Mac OS, you can jump straight to the [Docker for Mac](https://docs.docker.com/docker-for-mac/install/) install page.
+你将需要为您的开发环境安装Docker。 你可以在 Docker Engine Overview 的 [Supported Platforms](https://docs.docker.com/install/#supported-platforms) 部分中找到有关任何平台的信息。 如果你使用的是Mac OS，则可以直接跳至 [Docker for Mac](https://docs.docker.com/docker-for-mac/install/) 安装页面。
 
-### Generate Template
+### 生成模板
 
 We suggest using the Vapor template as a starting place. If you already have an App, build the template as described below into a new folder as a point of reference while dockerizing your existing app -- you can copy key resources from the template to your app and tweak them slightly as a jumping off point.
 
-1. Install or build the Vapor Toolbox ([macOS](../install/macos.md#install-toolbox), [Ubuntu](../install/ubuntu.md#install-toolbox)).
-2. Create a new Vapor App with `vapor-beta new my-dockerized-app` and walk through the prompts to enable or disable relevant features. Your answers to these prompts will affect how the Docker resource files are generated.
+我们推荐你使用 Vapor 模板作为开始。 如果您已经拥有一个应用程序，将以下所述的模板构建到新文件夹中作为参考，同时对现有应用进行docker化
+
+We suggest using the Vapor template as a starting place. If you already have an App, build the template as described below into a new folder as a point of reference while dockerizing your existing app -- you can copy key resources from the template to your app and tweak them slightly as a jumping off point.
+
+Install or build the Vapor Toolbox (macOS, Ubuntu).
+Create a new Vapor App with vapor-beta new my-dockerized-app and walk through the prompts to enable or disable relevant features. Your answers to these prompts will affect how the Docker resource files are generated.
 
 ## Docker Resources
 
